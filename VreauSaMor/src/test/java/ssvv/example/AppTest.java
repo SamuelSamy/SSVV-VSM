@@ -1,38 +1,74 @@
 package ssvv.example;
 
-import junit.framework.Test;
+import domain.Student;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import repository.NotaXMLRepo;
+import repository.StudentXMLRepo;
+import repository.TemaXMLRepo;
+import service.Service;
+import validation.NotaValidator;
+import validation.StudentValidator;
+import validation.TemaValidator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
+public class AppTest
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+    private StudentXMLRepo xmlRepo;
+    private Service service;
+
+    @BeforeEach
+    public void setUp() {
+        xmlRepo = new StudentXMLRepo("fisiere/Studenti.xml");
+        TemaXMLRepo temeRepo = new TemaXMLRepo(("fisiere/Teme.xml"));
+        service = new Service(
+                xmlRepo,
+                new StudentValidator(),
+                temeRepo,
+                new TemaValidator(),
+                new NotaXMLRepo("fisiere/Note.xml"),
+                new NotaValidator(xmlRepo, temeRepo));
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_Success()
     {
-        return new TestSuite( AppTest.class );
+        Student student = new Student("1", "A", 1, "a@a");
+        Student newStudent = service.addStudent(student);
+
+        assertEquals(student, newStudent);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_EmptyId()
     {
-        assertTrue( true );
+        Student student = new Student("", "B", 2, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Id incorect!");
+        }
+    }
+
+    @Test
+    public void testAddStudent_NullId()
+    {
+        Student student = new Student(null, "B", 2, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Id incorect!");
+        }
     }
 }
