@@ -192,5 +192,17 @@ public class AppTest
         }
     }
 
+    @Test
+    public void testAddStudent_EmptyName()
+    {
+        Student student = new Student("3", "", 3, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Nume incorect!");
+        }
+    }
 
 }
