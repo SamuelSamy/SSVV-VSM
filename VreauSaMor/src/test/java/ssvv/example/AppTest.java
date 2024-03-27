@@ -127,7 +127,7 @@ public class AppTest
     }
 
     @org.junit.jupiter.api.Test
-    public void testAddStudentName()
+    public void testAddStudent_NullId1()
     {
         Student student = new Student("3", "", 3, "a@a");
 
