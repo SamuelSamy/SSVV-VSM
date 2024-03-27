@@ -22,7 +22,6 @@ curent\Curent.class
 domain\Tema.class
 validation\Validator.class
 view\UI.class
-tests\AddStudentTests.class
 domain\Nota.class
 repository\FileRepository.class
 repository\HasID.class

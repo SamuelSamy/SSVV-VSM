@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ssvv.example.AppTest" time="0.152" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ssvv.example.AssignmentTest" time="0.01" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -62,13 +62,12 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testAddStudentDuplicate" classname="ssvv.example.AppTest" time="0.112"/>
-  <testcase name="testAddStudent_NullId" classname="ssvv.example.AppTest" time="0.003"/>
-  <testcase name="testAddStudent_Success" classname="ssvv.example.AppTest" time="0.004"/>
-  <testcase name="testAddStudent_EmptyId" classname="ssvv.example.AppTest" time="0.003"/>
-  <testcase name="testAddStudent_EmptyEmail" classname="ssvv.example.AppTest" time="0.003"/>
-  <testcase name="testAddStudent_EmptyName" classname="ssvv.example.AppTest" time="0.002"/>
-  <testcase name="testAddStudent_NegativeGroup" classname="ssvv.example.AppTest" time="0.002"/>
-  <testcase name="testAddStudent_NullName" classname="ssvv.example.AppTest" time="0.002"/>
-  <testcase name="testAddStudent_NullEmail" classname="ssvv.example.AppTest" time="0.002"/>
+  <testcase name="testAddAssignment_DeadlineGreaterThan14" classname="ssvv.example.AssignmentTest" time="0"/>
+  <testcase name="testAddAssignment_EmptyDescription" classname="ssvv.example.AssignmentTest" time="0"/>
+  <testcase name="testAddAssignment_ReceiveGreaterThan14" classname="ssvv.example.AssignmentTest" time="0"/>
+  <testcase name="testAddAssignment_Success" classname="ssvv.example.AssignmentTest" time="0"/>
+  <testcase name="testAddAssignment_EmptyId" classname="ssvv.example.AssignmentTest" time="0.002"/>
+  <testcase name="testAddAssignment_ReceiveLessThan1" classname="ssvv.example.AssignmentTest" time="0.002"/>
+  <testcase name="testAddAssignment_DeadlineLessThan1" classname="ssvv.example.AssignmentTest" time="0.002"/>
+  <testcase name="testAddAssignment_NullId" classname="ssvv.example.AssignmentTest" time="0.002"/>
 </testsuite>
