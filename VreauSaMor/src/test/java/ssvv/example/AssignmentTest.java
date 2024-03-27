@@ -1,15 +1,12 @@
 package ssvv.example;
 
-import domain.Student;
 import domain.Tema;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repository.StudentXMLRepo;
 import repository.TemaXMLRepo;
 import service.Service;
-import validation.StudentValidator;
 import validation.TemaValidator;
 
 import java.io.BufferedWriter;
@@ -23,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * Unit test for simple App.
  */
-public class AssignmentTests
+public class AssignmentTest
 {
     private TemaXMLRepo xmlRepo;
     private Service service;
