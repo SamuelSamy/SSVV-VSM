@@ -121,13 +121,22 @@ public class AppTest
     @org.junit.jupiter.api.Test
     public void testAddStudent_NullName()
     {
-        Student student = new Student("4", null, 4, "a@a");
+//        Student student = new Student("4", null, 4, "a@a");
+//
+//        try {
+//            service.addStudent(student);
+//            fail();
+//        } catch (Exception e) {
+//            assertEquals(e.getMessage(), "Nume incorect!");
+//        }
+
+        Student student = new Student(null, "B", 2, "a@a");
 
         try {
             service.addStudent(student);
             fail();
         } catch (Exception e) {
-            assertEquals(e.getMessage(), "Nume incorect!");
+            assertEquals(e.getMessage(), "Id incorect!");
         }
     }
 
