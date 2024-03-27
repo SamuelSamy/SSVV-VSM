@@ -172,7 +172,7 @@ public class AppTest
     }
 
     @org.junit.jupiter.api.Test
-    public void testAddStudent_DuplicateId()
+    public void testMaCacInElDeMerge()
     {
         Student student = new Student("8", "H", 8, "a@a");
         service.addStudent(student);
