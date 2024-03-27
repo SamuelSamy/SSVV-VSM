@@ -116,26 +116,18 @@ public class AppTest
     @org.junit.jupiter.api.Test
     public void testAddStudent_NullId()
     {
-        Student student = new Student("3", "", 3, "a@a");
+        Student student = new Student(null, "B", 2, "a@a");
 
         try {
             service.addStudent(student);
             fail();
         } catch (Exception e) {
-            assertEquals(e.getMessage(), "Nume incorect!");
+            assertEquals(e.getMessage(), "Id incorect!");
         }
-//        Student student = new Student(null, "B", 2, "a@a");
-//
-//        try {
-//            service.addStudent(student);
-//            fail();
-//        } catch (Exception e) {
-//            assertEquals(e.getMessage(), "Id incorect!");
-//        }
     }
 
     @org.junit.jupiter.api.Test
-    public void testAddStudent_EmptyName()
+    public void testAddStudentName()
     {
         Student student = new Student("3", "", 3, "a@a");
 
