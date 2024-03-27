@@ -1,6 +1,8 @@
 package tests;
 
 import domain.Student;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.NotaXMLRepo;
@@ -11,6 +13,10 @@ import validation.NotaValidator;
 import validation.StudentValidator;
 import validation.TemaValidator;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -19,26 +25,79 @@ public class AddStudentTests {
     private StudentXMLRepo xmlRepo;
     private Service service;
 
+    @BeforeAll
+    static void createXML() {
+        // Create a new xml file
+        try {
+            File xmlFile = new File("fisiere/test-Studenti.xml");
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(xmlFile))) {
+                writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                        "<inbox>\n" +
+                        "\n" +
+                        "</inbox>");
+                writer.flush();
+            }
+        } catch (Exception e) {
+            fail();
+        }
+
+
+    }
+
+    @AfterAll
+    static void deleteXML() {
+        // Delete the xml file
+        try {
+            File xmlFile = new File("fisiere/test-Studenti.xml");
+            xmlFile.delete();
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
     @BeforeEach
     public void setUp() {
-        xmlRepo = new StudentXMLRepo("fisiere/Studenti.xml");
-        TemaXMLRepo temeRepo = new TemaXMLRepo(("fisiere/Teme.xml"));
-        service = new Service(
+        xmlRepo = new StudentXMLRepo("fisiere/test-Studenti.xml");
+        this.service = new Service(
                 xmlRepo,
                 new StudentValidator(),
-                temeRepo,
-                new TemaValidator(),
-                new NotaXMLRepo("fisiere/Note.xml"),
-                new NotaValidator(xmlRepo, temeRepo));
+                null,
+                null,
+                null,
+                null);
+    }
+
+    @Test
+    public void testAddStudentDuplicate()
+    {
+        Student student = new Student("8", "H", 8, "a@a");
+        service.addStudent(student);
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Studentul exista deja!");
+        }
     }
 
     @Test
     public void testAddStudent_Success()
     {
-        Student student = new Student("1", "A", 1, "a@a");
-        Student newStudent = service.addStudent(student);
+        Student student = new Student("2", "A", 1, "a@a");
 
-        assertEquals(student, newStudent);
+        try {
+            service.addStudent(student);
+
+            // Get the student from the repository
+            Student newStudent = xmlRepo.findOne("2");
+
+            assertEquals(student, newStudent);
+        } catch (Exception e) {
+            fail();
+        }
+
     }
 
     @Test
@@ -64,6 +123,72 @@ public class AddStudentTests {
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Id incorect!");
+        }
+    }
+
+    @Test
+    public void testAddStudent_EmptyName()
+    {
+        Student student = new Student("3", "", 3, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Nume incorect!");
+        }
+    }
+
+    @Test
+    public void testAddStudent_NullName()
+    {
+        Student student = new Student("4", null, 4, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Nume incorect!");
+        }
+    }
+
+
+    @Test
+    public void testAddStudent_EmptyEmail()
+    {
+        Student student = new Student("5", "E", 5, "");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Email incorect!");
+        }
+    }
+
+    @Test
+    public void testAddStudent_NullEmail()
+    {
+        Student student = new Student("6", "F", 6, null);
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Email incorect!");
+        }
+    }
+
+    @Test
+    public void testAddStudent_NegativeGroup()
+    {
+        Student student = new Student("7", "G", -7, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Grupa incorecta!");
         }
     }
 }
