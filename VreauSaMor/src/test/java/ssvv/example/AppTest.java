@@ -3,6 +3,7 @@ package ssvv.example;
 import domain.Student;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.NotaXMLRepo;
@@ -12,6 +13,10 @@ import service.Service;
 import validation.NotaValidator;
 import validation.StudentValidator;
 import validation.TemaValidator;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -24,26 +29,54 @@ public class AppTest
     private StudentXMLRepo xmlRepo;
     private Service service;
 
+    @BeforeAll
+    static void createXML() {
+        // Create a new xml file
+        try {
+            File xmlFile = new File("fisiere/test-Studenti.xml");
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(xmlFile))) {
+                writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                        "<inbox>\n" +
+                        "\n" +
+                        "</inbox>");
+                writer.flush();
+            }
+        } catch (Exception e) {
+            fail();
+        }
+
+
+    }
+
     @BeforeEach
     public void setUp() {
-        xmlRepo = new StudentXMLRepo("fisiere/Studenti.xml");
-        TemaXMLRepo temeRepo = new TemaXMLRepo(("fisiere/Teme.xml"));
-        service = new Service(
+        xmlRepo = new StudentXMLRepo("fisiere/test-Studenti.xml");
+        this.service = new Service(
                 xmlRepo,
                 new StudentValidator(),
-                temeRepo,
-                new TemaValidator(),
-                new NotaXMLRepo("fisiere/Note.xml"),
-                new NotaValidator(xmlRepo, temeRepo));
+                null,
+                null,
+                null,
+                null);
     }
 
     @org.junit.jupiter.api.Test
     public void testAddStudent_Success()
     {
-        Student student = new Student("1", "A", 1, "a@a");
-        Student newStudent = service.addStudent(student);
+        Student student = new Student("2", "A", 1, "a@a");
 
-        assertEquals(student, newStudent);
+        try {
+            service.addStudent(student);
+
+            // Get the student from the repository
+            Student newStudent = xmlRepo.findOne("2");
+
+            assertEquals(student, newStudent);
+        } catch (Exception e) {
+            fail();
+        }
+
     }
 
     @org.junit.jupiter.api.Test
@@ -148,7 +181,7 @@ public class AppTest
             service.addStudent(student);
             fail();
         } catch (Exception e) {
-            assertEquals(e.getMessage(), "Id incorect!");
+            assertEquals(e.getMessage(), "Studentul exista deja!");
         }
     }
 }

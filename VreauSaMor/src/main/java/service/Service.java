@@ -59,6 +59,13 @@ public class Service {
      */
     public Student addStudent(Student student) {
         studentValidator.validate(student);
+
+        // Check if there is already a student with the same ID
+        Student existingStudent = studentFileRepository.findOne(student.getID());
+        if (existingStudent != null) {
+            throw new ValidationException("Studentul exista deja!");
+        }
+
         return studentFileRepository.save(student);
     }
 
