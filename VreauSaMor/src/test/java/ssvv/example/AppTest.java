@@ -62,6 +62,20 @@ public class AppTest
     }
 
     @org.junit.jupiter.api.Test
+    public void testAddStudent_DuplicateId()
+    {
+        Student student = new Student("8", "H", 8, "a@a");
+        service.addStudent(student);
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Studentul exista deja!");
+        }
+    }
+
+    @org.junit.jupiter.api.Test
     public void testAddStudent_Success()
     {
         Student student = new Student("2", "A", 1, "a@a");
@@ -171,17 +185,5 @@ public class AppTest
         }
     }
 
-    @org.junit.jupiter.api.Test
-    public void testAddStudent_DuplicateId()
-    {
-        Student student = new Student("8", "H", 8, "a@a");
-        service.addStudent(student);
 
-        try {
-            service.addStudent(student);
-            fail();
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "Studentul exista deja!");
-        }
-    }
 }
