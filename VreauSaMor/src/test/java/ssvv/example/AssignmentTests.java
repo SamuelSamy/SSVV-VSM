@@ -61,12 +61,97 @@ public class AssignmentTests
     }
 
     @Test
-    void testAddAssignment_Success() {
+    public void testAddAssignment_Success() {
         Tema newTema = new Tema("1", "a", 1, 1);
 
         this.service.addTema(newTema);
 
         assertEquals(newTema, this.xmlRepo.findOne("1"));
+    }
+
+    @Test
+    public void testAddAssignment_EmptyId() {
+        Tema newTema = new Tema("", "a", 1, 1);
+
+        try {
+            this.service.addTema(newTema);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Numar tema invalid!");
+        }
+    }
+
+    @Test
+    public void testAddAssignment_NullId() {
+        Tema newTema = new Tema(null, "a", 1, 1);
+
+        try {
+            this.service.addTema(newTema);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Numar tema invalid!");
+        }
+    }
+
+    @Test
+    public void testAddAssignment_EmptyDescription() {
+        Tema newTema = new Tema("2", "", 1, 1);
+
+        try {
+            this.service.addTema(newTema);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Descriere invalida!");
+        }
+    }
+
+    @Test
+    public void testAddAssignment_DeadlineLessThan1() {
+        Tema newTema = new Tema("3", "a", 0, 1);
+
+        try {
+            this.service.addTema(newTema);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Deadlineul trebuie sa fie intre 1-14.");
+        }
+    }
+
+
+    @Test
+    public void testAddAssignment_DeadlineGreaterThan14() {
+        Tema newTema = new Tema("4", "a", 15, 1);
+
+        try {
+            this.service.addTema(newTema);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Deadlineul trebuie sa fie intre 1-14.");
+        }
+    }
+
+    @Test
+    public void testAddAssignment_ReceiveGreaterThan14() {
+        Tema newTema = new Tema("5", "a", 1, 15);
+
+        try {
+            this.service.addTema(newTema);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Saptamana primirii trebuie sa fie intre 1-14.");
+        }
+    }
+
+    @Test
+    public void testAddAssignment_ReceiveLessThan1() {
+        Tema newTema = new Tema("6", "a", 1, 0);
+
+        try {
+            this.service.addTema(newTema);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Saptamana primirii trebuie sa fie intre 1-14.");
+        }
     }
 
 }
