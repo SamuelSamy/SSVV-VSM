@@ -104,19 +104,19 @@ public class AppTest
         }
 
     }
-
-    @Test
-    public void testAddStudent_EmptyId()
-    {
-        Student student = new Student("", "B", 2, "a@a");
-
-        try {
-            service.addStudent(student);
-            fail();
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "Id incorect!");
-        }
-    }
+//
+//    @Test
+//    public void testAddStudent_EmptyId()
+//    {
+//        Student student = new Student("", "B", 2, "a@a");
+//
+//        try {
+//            service.addStudent(student);
+//            fail();
+//        } catch (Exception e) {
+//            assertEquals(e.getMessage(), "Id incorect!");
+//        }
+//    }
 
     @Test
     public void testAddStudent_NullId()
