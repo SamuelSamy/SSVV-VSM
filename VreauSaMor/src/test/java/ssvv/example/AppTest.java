@@ -6,7 +6,6 @@ import junit.framework.TestSuite;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import repository.NotaXMLRepo;
 import repository.StudentXMLRepo;
 import repository.TemaXMLRepo;
@@ -73,7 +72,7 @@ public class AppTest
                 null);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAddStudentDuplicate()
     {
         Student student = new Student("8", "H", 8, "a@a");
@@ -87,7 +86,7 @@ public class AppTest
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAddStudent_Success()
     {
         Student student = new Student("2", "A", 1, "a@a");
@@ -104,21 +103,21 @@ public class AppTest
         }
 
     }
-//
-//    @Test
-//    public void testAddStudent_EmptyId()
-//    {
-//        Student student = new Student("", "B", 2, "a@a");
-//
-//        try {
-//            service.addStudent(student);
-//            fail();
-//        } catch (Exception e) {
-//            assertEquals(e.getMessage(), "Id incorect!");
-//        }
-//    }
 
-    @Test
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_EmptyId()
+    {
+        Student student = new Student("", "B", 2, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Id incorect!");
+        }
+    }
+
+    @org.junit.jupiter.api.Test
     public void testAddStudent_NullId()
     {
         Student student = new Student(null, "B", 2, "a@a");
@@ -131,7 +130,7 @@ public class AppTest
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAddStudent_EmptyName()
     {
         Student student = new Student("3", "", 3, "a@a");
@@ -144,7 +143,7 @@ public class AppTest
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAddStudent_NullName()
     {
         Student student = new Student("4", null, 4, "a@a");
@@ -158,7 +157,7 @@ public class AppTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAddStudent_EmptyEmail()
     {
         Student student = new Student("5", "E", 5, "");
@@ -171,7 +170,7 @@ public class AppTest
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAddStudent_NullEmail()
     {
         Student student = new Student("6", "F", 6, null);
@@ -184,7 +183,7 @@ public class AppTest
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAddStudent_NegativeGroup()
     {
         Student student = new Student("7", "G", -7, "a@a");
