@@ -1,6 +1,7 @@
 package ssvv.example;
 
 import domain.Student;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,17 @@ public class StudentTests
 
     }
 
+    @AfterAll
+    static void deleteXML() {
+        // Delete the xml file
+        try {
+            File xmlFile = new File("fisiere/test-Studenti.xml");
+            xmlFile.delete();
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         xmlRepo = new StudentXMLRepo("fisiere/test-Studenti.xml");
@@ -56,7 +68,7 @@ public class StudentTests
     }
 
     @Test
-    public void testAddStudent_DuplicateId()
+    public void testAddStudentDuplicate()
     {
         Student student = new Student("8", "H", 8, "a@a");
         service.addStudent(student);

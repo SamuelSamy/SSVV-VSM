@@ -3,6 +3,7 @@ package ssvv.example;
 import domain.Student;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,12 @@ public class AppTest
                 null,
                 null,
                 null);
+    }
+
+    @AfterAll
+    static void deleteXML() {
+        File xmlFile = new File("fisiere/test-Studenti.xml");
+        xmlFile.delete();
     }
 
     @org.junit.jupiter.api.Test
