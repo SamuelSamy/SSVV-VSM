@@ -59,10 +59,90 @@ public class AppTest
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAddStudent_NullId()
     {
         Student student = new Student(null, "B", 2, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Id incorect!");
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_EmptyName()
+    {
+        Student student = new Student("3", "", 3, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Nume incorect!");
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_NullName()
+    {
+        Student student = new Student("4", null, 4, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Nume incorect!");
+        }
+    }
+
+
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_EmptyEmail()
+    {
+        Student student = new Student("5", "E", 5, "");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Email incorect!");
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_NullEmail()
+    {
+        Student student = new Student("6", "F", 6, null);
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Email incorect!");
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_NegativeGroup()
+    {
+        Student student = new Student("7", "G", -7, "a@a");
+
+        try {
+            service.addStudent(student);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Grupa incorecta!");
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testAddStudent_DuplicateId()
+    {
+        Student student = new Student("8", "H", 8, "a@a");
+        service.addStudent(student);
 
         try {
             service.addStudent(student);
